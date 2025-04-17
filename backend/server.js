@@ -19,9 +19,17 @@ mongoose.connect(process.env.MONGO_URI)
 
 // routes for testing
 app.get('/', (req, res) => {
-    res.json({
+    res.status(200).json({
         status: 200,
         message: "Go to '/api/auth/test' to test the API"
+    })
+});
+
+// handling reuqest for other routes
+app.all('*', (req, res) => {
+    res.status(404).json({
+        status: 404,
+        message: 'Route not found'
     });
 });
 
