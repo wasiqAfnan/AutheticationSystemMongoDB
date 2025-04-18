@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import { ClipLoader } from "react-spinners";
+import toast from "react-hot-toast";
+
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   // Redirect if already logged in
@@ -17,6 +21,7 @@ export default function LoginForm() {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    setLoading(true);
 
     axios.post("http://localhost:5000/api/auth/login", {
       email,
@@ -25,13 +30,17 @@ export default function LoginForm() {
       .then((response) => {
         localStorage.setItem("name", response.data.user.name);
         localStorage.setItem("email", response.data.user.email);
-        alert("Login successful ✅");
+        toast.success("Login successful ✅");
         navigate("/dashboard");
       })
       .catch((err) => {
         console.error(err);
         const msg = err.response?.data?.message || "Login failed ❌";
-        alert(msg);
+        toast.error(msg);
+      })
+      .then(() => {
+        // This `.then()` will execute after both success or error
+        setLoading(false);
       });
   };
 
@@ -69,9 +78,12 @@ export default function LoginForm() {
 
         <button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-200"
+          disabled={loading}
+          className={`w-full flex justify-center items-center gap-2 ${
+            loading ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+          } text-white py-2 rounded-md transition duration-200`}
         >
-          Login
+          {loading ? <ClipLoader size={20} color="#fff" /> : "Login"}
         </button>
 
         <p className="text-center text-sm mt-4 text-gray-300">

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function Dashboard() {
   const [username, setUsername] = useState("");
@@ -17,7 +18,8 @@ export default function Dashboard() {
 
   const handleLogout = () => {
     localStorage.removeItem("name"); // clear session
-    localStorage.removeItem("email")
+    localStorage.removeItem("email");
+    toast.success("Logged out ✅");
     navigate("/");
   };
 
