@@ -23,7 +23,7 @@ export default function LoginForm() {
     e.preventDefault();
     setLoading(true);
 
-    axios.post("http://localhost:5000/api/auth/login", {
+    axios.post("https://authwasiqsys.onrender.com/api/auth/login", {
       email,
       password,
     })
