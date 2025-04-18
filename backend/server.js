@@ -25,19 +25,22 @@ app.get('/', (req, res) => {
     })
 });
 
-// handling reuqest for other routes
-app.all('*', (req, res) => {
-    res.status(404).json({
-        status: 404,
-        message: 'Route not found'
-    });
-});
-
 // routes for auth
 app.use('/api/auth', authRoutes);
 
+// Catch-all route for unmatched routes
+// latest version of express (5.1.0) have issue with '*' route
+app.all('/:splat', (req, res) => {
+    res.status(404).json({
+      status: 404,
+      message: 'Route not found'
+    });
+  });
 
-const port = process.env.PORT;
+
+
+
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(`Server is up and running`);
 });
