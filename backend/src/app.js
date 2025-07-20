@@ -3,6 +3,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import userRouter from "./routes/userRoutes.js";
 import healthCheckRouter from "./routes/healthCheckRoutes.js";
+import errorMiddleware from "./middlewares/errorMiddleware.js";
 
 const app = express();
 
@@ -21,6 +22,6 @@ app.all(/./, (req, res) => {
 });
 
 // Error handling middleware
-// app.use(errorMiddleware);
+app.use(errorMiddleware);
 
 export default app;
