@@ -1,14 +1,19 @@
 import "dotenv/config";
 import express from "express";
 import cookieParser from "cookie-parser";
-import UserRouter from "./routes/userRoutes.js";
+import userRouter from "./routes/userRoutes.js";
+import healthCheckRouter from "./routes/healthCheckRoutes.js";
 
 const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/api/user", UserRouter);
+// health check routes
+app.use("/api/test", healthCheckRouter)
+
+// handled user routes
+app.use("/api/user", userRouter);
 
 // handling all other incorrect routes
 app.all(/./, (req, res) => {
