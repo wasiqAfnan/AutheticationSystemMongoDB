@@ -9,10 +9,10 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-// health check routes
+// health check route
 app.use("/api/test", healthCheckRouter)
 
-// handled user routes
+// user route
 app.use("/api/user", userRouter);
 
 // handling all other incorrect routes
