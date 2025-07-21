@@ -12,28 +12,24 @@ app.use(express.json());
 app.use(cookieParser());
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://accessifywasiq.netlify.app/",
-  "https://accessify-lime.vercel.app/",
-  "https://accessify-wasiq-afnan-ansaris-projects.vercel.app/",
+  "https://accessifywasiq.netlify.app",
+  "https://accessify-lime.vercel.app", 
 ];
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      // allow requests with no origin (like Postman or curl)
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.indexOf(origin) !== -1) {
-        // Origin is allowed
+      if (!origin) return callback(null, true); // Allow server-to-server, Postman, etc.
+      if (allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        // Origin not allowed
         callback(new Error("Not allowed by CORS"));
       }
     },
     credentials: true,
   })
 );
+
 
 
 // health check route
