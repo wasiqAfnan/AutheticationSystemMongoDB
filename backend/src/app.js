@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
     cors({
-        origin: "https://accessifywasiq.netlify.app/", // your frontend URL
+        origin: "https://accessifywasiq.netlify.app", // your frontend URL
         credentials: true, // 🧠 allow cookies
     })
 );
