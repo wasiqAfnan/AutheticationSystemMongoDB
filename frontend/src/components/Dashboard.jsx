@@ -7,13 +7,16 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedName = localStorage.getItem("name");
-    if (storedName) {
-      setUsername(storedName);
-    } else {
-      // No user? Redirect to login
-      navigate("/");
-    }
+    // const storedName = localStorage.getItem("name");
+    // if (storedName) {
+    //   setUsername(storedName);
+    // } else {
+    //   // No user? Redirect to login
+    //   navigate("/");
+    // }
+    
+
+
   }, [navigate]);
 
   const handleLogout = () => {
