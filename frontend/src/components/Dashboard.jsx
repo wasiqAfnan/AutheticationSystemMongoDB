@@ -36,8 +36,8 @@ export default function Dashboard() {
   }, [navigate]);
 
  const handleLogout = async () => {
-  //   localStorage.removeItem("name"); // clear session
-  //   localStorage.removeItem("email");
+    // localStorage.removeItem("name"); // clear session
+    // localStorage.removeItem("email");
     try {
       await axios.post(
         `${backendURL}/api/user/logout`,

@@ -11,12 +11,12 @@ export default function LoginForm() {
   const navigate = useNavigate();
 
   // Redirect if already logged in
-  // useEffect(() => {
-  //   const user = localStorage.getItem("name");
-  //   if (user) {
-  //     navigate("/dashboard");
-  //   }
-  // }, []);
+  useEffect(() => {
+    const user = localStorage.getItem("name");
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
 
   const handleLogin = (e) => {
     e.preventDefault();
