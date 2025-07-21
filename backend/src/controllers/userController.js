@@ -130,7 +130,7 @@ const logoutUser = async (req, res) => {
 const userProfile = async (req, res) => {
     return res
         .status(200)
-        .json(new ApiResponse(`Profile Access Successful`, 200, req.user));
+        .json(new ApiResponse("Profile Access Successful", 200, req.user));
 };
 
 const userAnalytics = async (req, res, next) => {
@@ -143,8 +143,8 @@ const userAnalytics = async (req, res, next) => {
             .status(200)
             .json(
                 new ApiResponse(
-                    200,
                     "You are authroized to access this route",
+                    200,
                     userData
                 )
             );
