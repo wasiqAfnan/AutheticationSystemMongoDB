@@ -10,35 +10,34 @@ export default function Dashboard() {
 
   // Auth check function (outside useEffect)
 
-  const checkAuth = async () => {
-    try {
-      const res = await axios.post(
-        `${backendURL}/api/user/profile`,
-        {},
-        {
-          withCredentials: true,
-        }
-      );
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await axios.post(
+          `${backendURL}/api/user/profile`,
+          {},
+          {
+            withCredentials: true,
+          }
+        );
 
-      if (res.data.success) {
-        setUsername(res.data.data.name); // Based on your backend response
-      } else {
-        toast.error("Unauthorized access");
+        if (res.data.success) {
+          setUsername(res.data.data.name); // Based on your backend response
+        } else {
+          toast.error("Unauthorized access");
+          navigate("/");
+        }
+      } catch (error) {
+        toast.error("Please login first");
         navigate("/");
       }
-    } catch (error) {
-      toast.error("Please login first");
-      navigate("/");
-    }
-  };
-
-  useEffect(() => {
+    };
     checkAuth();
   }, [navigate]);
 
-  const handleLogout = async () => {
-    localStorage.removeItem("name"); // clear session
-    localStorage.removeItem("email");
+ const handleLogout = async () => {
+  //   localStorage.removeItem("name"); // clear session
+  //   localStorage.removeItem("email");
     try {
       await axios.post(
         `${backendURL}/api/user/logout`,
