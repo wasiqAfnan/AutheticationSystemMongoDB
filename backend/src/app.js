@@ -4,11 +4,13 @@ import cookieParser from "cookie-parser";
 import userRouter from "./routes/userRoutes.js";
 import healthCheckRouter from "./routes/healthCheckRoutes.js";
 import errorMiddleware from "./middlewares/errorMiddleware.js";
+import cors from "cors";
 
 const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
 
 // health check route
 app.use("/api/test", healthCheckRouter)
