@@ -10,9 +10,27 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://accessifywasiq.netlify.app/",
+  "https://accessify-lime.vercel.app/",
+  "https://accessify-wasiq-afnan-ansaris-projects.vercel.app/",
+];
+
 app.use(
   cors({
-    origin: "https://accessify-lime.vercel.app/",
+    origin: function (origin, callback) {
+      // allow requests with no origin (like Postman or curl)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        // Origin is allowed
+        callback(null, true);
+      } else {
+        // Origin not allowed
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
