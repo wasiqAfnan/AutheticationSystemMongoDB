@@ -17,8 +17,8 @@ export default function Dashboard() {
   }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem("name"); // clear session
-    localStorage.removeItem("email");
+    // localStorage.removeItem("name"); // clear session
+    // localStorage.removeItem("email");
     toast.success("Logged out ✅");
     navigate("/");
   };

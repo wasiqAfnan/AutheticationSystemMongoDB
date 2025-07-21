@@ -15,9 +15,10 @@ export default function SignupForm() {
   const handleSignup = (e) => {
     e.preventDefault();
     setLoading(true);
-
+    console.log(`${process.env.BACKEND_URL}/api/auth/signup`);
+    
     axios
-      .post("https://authwasiqsys.onrender.com/api/auth/signup", {
+      .post(`${process.env.BACKEND_URL}/api/user/signup`, {
         name,
         email,
         contact,
@@ -25,6 +26,7 @@ export default function SignupForm() {
       })
       .then((res) => {
         toast.success("Registration successful ✅");
+        console.log(res);
         navigate("/");
       })
       .catch((err) => {

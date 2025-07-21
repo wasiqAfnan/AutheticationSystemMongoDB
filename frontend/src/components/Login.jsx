@@ -23,13 +23,13 @@ export default function LoginForm() {
     e.preventDefault();
     setLoading(true);
 
-    axios.post("https://authwasiqsys.onrender.com/api/auth/login", {
+    axios.post(`${process.env.BACKEND_URL}/api/user/login`, {
       email,
       password,
     })
       .then((response) => {
-        localStorage.setItem("name", response.data.user.name);
-        localStorage.setItem("email", response.data.user.email);
+        // localStorage.setItem("name", response.data.user.name);
+        // localStorage.setItem("email", response.data.user.email);
         toast.success("Login successful ✅");
         navigate("/dashboard");
       })
