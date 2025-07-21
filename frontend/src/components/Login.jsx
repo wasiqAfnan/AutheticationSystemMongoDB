@@ -11,12 +11,12 @@ export default function LoginForm() {
   const navigate = useNavigate();
 
   // Redirect if already logged in
-  // useEffect(() => {
-  //   const user = localStorage.getItem("name");
-  //   if (user) {
-  //     navigate("/dashboard");
-  //   }
-  // }, [navigate]);
+  useEffect(() => {
+    const user = localStorage.getItem("name");
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -35,10 +35,9 @@ export default function LoginForm() {
         }
       )
       .then((response) => {
-        // localStorage.setItem("name", response.data.user.name);
-        // localStorage.setItem("email", response.data.user.email);
-        toast.success("Login successful ✅");
-        console.log(response.data);
+        localStorage.setItem("name", response.data.data.name);
+        localStorage.setItem("email", response.data.data.email);
+        toast.success("Login successful ✅"); 
         navigate("/dashboard");
       })
       .catch((err) => {

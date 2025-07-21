@@ -43,10 +43,9 @@ export const isAuthorized =
     (...roles) =>
     async (req, res, next) => {
         if (!roles.includes(req.user.role)) {
-            return next(new ApiError(
-                "You are not authorized to access this route",
-                403
-            ));
+            return next(
+                new ApiError("You are not authorized to access this route", 403)
+            );
         }
         next();
     };

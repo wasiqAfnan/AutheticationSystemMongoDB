@@ -1,21 +1,27 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 export default function Dashboard() {
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
   const backendURL = import.meta.env.VITE_BACKEND_URL;
-  
+
   // Auth check function (outside useEffect)
+
   const checkAuth = async () => {
     try {
-      const res = await axios.get(`${backendURL}/api/user/profile`, {
-        withCredentials: true, // ensures cookie is sent
-      });
+      const res = await axios.post(
+        `${backendURL}/api/user/profile`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
 
       if (res.data.success) {
-        setUsername(res.data.data.name); // Adjust based on actual backend response
+        setUsername(res.data.data.name); // Based on your backend response
       } else {
         toast.error("Unauthorized access");
         navigate("/");
@@ -27,21 +33,18 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    // const storedName = localStorage.getItem("name");
-    // if (storedName) {
-    //   setUsername(storedName);
-    // } else {
-    //   // No user? Redirect to login
-    //   navigate("/");
-    // }
     checkAuth();
   }, [navigate]);
 
   const handleLogout = async () => {
-    // localStorage.removeItem("name"); // clear session
-    // localStorage.removeItem("email");
+    localStorage.removeItem("name"); // clear session
+    localStorage.removeItem("email");
     try {
-      await axios.post(`${backendURL}/api/user/logout`, {}, { withCredentials: true });
+      await axios.post(
+        `${backendURL}/api/user/logout`,
+        {},
+        { withCredentials: true }
+      );
       toast.success("Logged out ✅");
       navigate("/");
     } catch (err) {
