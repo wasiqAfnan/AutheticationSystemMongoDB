@@ -12,13 +12,15 @@ export default function SignupForm() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
+
   const handleSignup = (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log(`${process.env.BACKEND_URL}/api/auth/signup`);
+    console.log(`${backendURL}/api/auth/signup`);
     
     axios
-      .post(`${process.env.BACKEND_URL}/api/user/signup`, {
+      .post(`${backendURL}/api/user/signup`, {
         name,
         email,
         contact,

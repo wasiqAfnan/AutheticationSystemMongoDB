@@ -4,7 +4,6 @@ import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import toast from "react-hot-toast";
 
-
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,25 +11,34 @@ export default function LoginForm() {
   const navigate = useNavigate();
 
   // Redirect if already logged in
-  useEffect(() => {
-    const user = localStorage.getItem("name");
-    if (user) {
-      navigate("/dashboard");
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   const user = localStorage.getItem("name");
+  //   if (user) {
+  //     navigate("/dashboard");
+  //   }
+  // }, [navigate]);
 
   const handleLogin = (e) => {
     e.preventDefault();
     setLoading(true);
+    const backendURL = import.meta.env.VITE_BACKEND_URL;
 
-    axios.post(`${process.env.BACKEND_URL}/api/user/login`, {
-      email,
-      password,
-    })
+    axios
+      .post(
+        `${backendURL}/api/user/login`,
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true, // allow cookie to be set
+        }
+      )
       .then((response) => {
         // localStorage.setItem("name", response.data.user.name);
         // localStorage.setItem("email", response.data.user.email);
         toast.success("Login successful ✅");
+        console.log(response.data);
         navigate("/dashboard");
       })
       .catch((err) => {
@@ -80,7 +88,9 @@ export default function LoginForm() {
           type="submit"
           disabled={loading}
           className={`w-full flex justify-center items-center gap-2 ${
-            loading ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+            loading
+              ? "bg-blue-400 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700"
           } text-white py-2 rounded-md transition duration-200`}
         >
           {loading ? <ClipLoader size={20} color="#fff" /> : "Login"}

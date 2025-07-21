@@ -5,6 +5,25 @@ import toast from "react-hot-toast";
 export default function Dashboard() {
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
+  // Auth check function (outside useEffect)
+  const checkAuth = async () => {
+    try {
+      const res = await axios.get(`${backendURL}/api/user/profile`, {
+        withCredentials: true, // ensures cookie is sent
+      });
+
+      if (res.data.success) {
+        setUsername(res.data.data.name); // Adjust based on actual backend response
+      } else {
+        toast.error("Unauthorized access");
+        navigate("/");
+      }
+    } catch (error) {
+      toast.error("Please login first");
+      navigate("/");
+    }
+  };
 
   useEffect(() => {
     // const storedName = localStorage.getItem("name");
@@ -14,16 +33,19 @@ export default function Dashboard() {
     //   // No user? Redirect to login
     //   navigate("/");
     // }
-    
-
-
+    checkAuth();
   }, [navigate]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     // localStorage.removeItem("name"); // clear session
     // localStorage.removeItem("email");
-    toast.success("Logged out ✅");
-    navigate("/");
+    try {
+      await axios.post(`${backendURL}/api/user/logout`, {}, { withCredentials: true });
+      toast.success("Logged out ✅");
+      navigate("/");
+    } catch (err) {
+      toast.error("Logout failed.");
+    }
   };
 
   return (

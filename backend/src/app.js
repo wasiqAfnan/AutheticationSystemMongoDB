@@ -10,10 +10,15 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(
+    cors({
+        origin: "http://localhost:5173", // your frontend URL
+        credentials: true, // 🧠 allow cookies
+    })
+);
 
 // health check route
-app.use("/api/test", healthCheckRouter)
+app.use("/api/test", healthCheckRouter);
 
 // user route
 app.use("/api/user", userRouter);
