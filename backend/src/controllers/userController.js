@@ -133,4 +133,33 @@ const userProfile = async (req, res) => {
         .json(new ApiResponse(`Profile Access Successful`, 200, req.user));
 };
 
-export { registerUser, loginUser, logoutUser, userProfile };
+const userAnalytics = async (req, res, next) => {
+    try {
+        const userData = await User.find();
+        if (!userData) {
+            throw new ApiError("Error occured while fetching from DB", 500);
+        }
+        return res
+            .status(200)
+            .json(
+                new ApiResponse(
+                    200,
+                    "You are authroized to access this route",
+                    userData
+                )
+            );
+    } catch (error) {
+        console.log("Access Error: ", error);
+
+        if (error instanceof ApiError) {
+            return next(error);
+        }
+
+        // For all other errors, send a generic error message
+        return next(
+            new ApiError("Something went wrong while getting the data", 500)
+        );
+    }
+};
+
+export { registerUser, loginUser, logoutUser, userProfile, userAnalytics };
