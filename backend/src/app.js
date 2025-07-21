@@ -11,11 +11,22 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(
-    cors({
-        origin: "https://accessifywasiq.netlify.app", // your frontend URL
-        credentials: true, // 🧠 allow cookies
-    })
+  cors({
+    origin: function (origin, callback) {
+      const allowedOrigins = [
+        "http://localhost:5173",
+        "https://accessifywasiq.netlify.app",
+      ];
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
 );
+
 
 // health check route
 app.use("/api/test", healthCheckRouter);
