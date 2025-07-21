@@ -6,6 +6,7 @@ export default function Dashboard() {
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
   const backendURL = import.meta.env.VITE_BACKEND_URL;
+  
   // Auth check function (outside useEffect)
   const checkAuth = async () => {
     try {
