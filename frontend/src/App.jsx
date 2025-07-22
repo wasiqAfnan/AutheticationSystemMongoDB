@@ -6,6 +6,7 @@ import Signup from './components/Signup';
 import Dashboard from './components/Dashboard';
 import { Toaster } from "react-hot-toast";
 import NotFound from './components/NotFound';
+import Analytics from './components/Analytics';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/analytics" element={<Analytics />} />
           
           {/* Catch all other incorrecet routes */}
           <Route path="*" element={<NotFound />} />
