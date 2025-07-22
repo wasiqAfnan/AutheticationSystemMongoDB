@@ -12,7 +12,7 @@ export default function LoginForm() {
 
   // Redirect if already logged in
   useEffect(() => {
-    const user = localStorage.getItem("name");
+    const user = sessionStorage.getItem("name");
     if (user) {
       navigate("/dashboard");
     }
@@ -21,7 +21,7 @@ export default function LoginForm() {
   const handleLogin = (e) => {
     e.preventDefault();
     setLoading(true);
-    const backendURL = import.meta.env.VITE_BACKEND_URL;
+    const backendURL = import.meta.env.VITE_BACKEND_URL_LOCAL;
 
     axios
       .post(
@@ -35,8 +35,8 @@ export default function LoginForm() {
         }
       )
       .then((response) => {
-        // localStorage.setItem("name", response.data.data.name);
-        // localStorage.setItem("email", response.data.data.email);
+        sessionStorage.setItem("name", response.data.data.name);
+        sessionStorage.setItem("email", response.data.data.email);
         toast.success("Login successful ✅"); 
         navigate("/dashboard");
       })

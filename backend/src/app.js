@@ -9,17 +9,16 @@ import cors from "cors";
 const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })); 
 app.use(cookieParser());
 
-
 app.use(
-  cors({
-    origin:"https://accessify-lime.vercel.app",
-    credentials: true,
-  })
+    cors({
+        // origin: process.env.FRONTEND_URL, // production
+        origin: "http://localhost:5173", // don't put slash at last this will raise error in CORS
+        credentials: true,
+    })
 );
-
-
 
 // health check route
 app.use("/api/test", healthCheckRouter);

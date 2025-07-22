@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
@@ -13,6 +13,14 @@ export default function SignupForm() {
   const navigate = useNavigate();
 
   const backendURL = import.meta.env.VITE_BACKEND_URL;
+
+  // Redirect if already logged in
+    useEffect(() => {
+      const user = sessionStorage.getItem("name");
+      if (user) {
+        navigate("/dashboard");
+      }
+    }, [navigate]);
 
   const handleSignup = (e) => {
     e.preventDefault();

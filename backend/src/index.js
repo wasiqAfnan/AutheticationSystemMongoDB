@@ -7,6 +7,9 @@ const port = process.env.PORT || 5000;
 connectDb().then(
     // starting the server only if DB connection has been established
     app.listen(port, () => {
+        // for production
+        // console.log(`Server is running.`);
+        // for development
         console.log(`Server is running. URL: http://localhost:${port}`);
     })
 );

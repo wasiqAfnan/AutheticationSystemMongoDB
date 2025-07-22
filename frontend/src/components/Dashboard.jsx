@@ -5,39 +5,39 @@ import axios from "axios";
 
 export default function Dashboard() {
   const [username, setUsername] = useState("");
+  const [role, setRole] = useState("");
   const navigate = useNavigate();
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
+  const backendURL = import.meta.env.VITE_BACKEND_URL_LOCAL;
 
   // Auth check function (outside useEffect)
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await axios.post(
+    const checkAuth = () => {
+      axios
+        .post(
           `${backendURL}/api/user/profile`,
           {},
           {
             withCredentials: true,
           }
-        );
-
-        if (res.data.success) {
+        )
+        .then((res) => {
           setUsername(res.data.data.name); // Based on your backend response
-        } else {
-          toast.error("Unauthorized access");
+          setRole(res.data.data.role);
+          console.log("Role: ", role);
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error(err.response?.data?.message || "Login failed ❌");
           navigate("/");
-        }
-      } catch (error) {
-        toast.error("Please login first");
-        navigate("/");
-      }
+        });
     };
     checkAuth();
   }, [navigate]);
 
- const handleLogout = async () => {
-    // localStorage.removeItem("name"); // clear session
-    // localStorage.removeItem("email");
+  const handleLogout = async () => {
+    sessionStorage.removeItem("name"); // clear session
+    sessionStorage.removeItem("email");
     try {
       await axios.post(
         `${backendURL}/api/user/logout`,
@@ -56,12 +56,23 @@ export default function Dashboard() {
       {/* Header with logout */}
       <div className="flex justify-between items-center p-4 bg-gray-800 shadow-md">
         <h1 className="text-xl font-semibold">Dashboard</h1>
-        <button
-          onClick={handleLogout}
-          className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md"
-        >
-          Logout
-        </button>
+
+        <div className="flex items-center gap-4">
+          {role === "ADMIN" && (
+            <button
+              onClick={() => navigate("/analytics")}
+              className="bg-slate-700 hover:bg-slate-500 text-white px-4 py-2 rounded-xl"
+            >
+              Analytics
+            </button>
+          )}
+          <button
+            onClick={handleLogout}
+            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl"
+          >
+            Logout
+          </button>
+        </div>
       </div>
 
       {/* Welcome Message */}
