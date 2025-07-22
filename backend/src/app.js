@@ -14,8 +14,8 @@ app.use(cookieParser());
 
 app.use(
     cors({
-        // origin: process.env.FRONTEND_URL, // production
-        origin: "http://localhost:5173", // don't put slash at last this will raise error in CORS
+        origin: process.env.FRONTEND_URL, // production
+        // origin: "http://localhost:5173", // don't put slash at last this will raise error in CORS
         credentials: true,
     })
 );
