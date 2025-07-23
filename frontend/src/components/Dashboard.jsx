@@ -6,7 +6,6 @@ import axios from "axios";
 export default function Dashboard() {
     const [username, setUsername] = useState("");
     const [role, setRole] = useState("");
-    const [loading, setLoading] = useState(true); // ✅ auth check in progress
     const navigate = useNavigate();
     const backendURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -25,7 +24,6 @@ export default function Dashboard() {
             setUsername(res.data.data.name); // Based on your backend response
             setRole(res.data.data.role);
             console.log("Role: ", role);
-            setLoading(false); // ✅ done checking
           })
           .catch((err) => {
             console.log(err);
@@ -43,21 +41,12 @@ export default function Dashboard() {
           sessionStorage.removeItem("name"); // clear session
           sessionStorage.removeItem("email");
           toast.success("Logged out ✅");
-          navigate("/");
+          navigate("/", { replace: true });
         })
         .catch((err) => {
           toast.error("Logout failed.");
         });
     };
-
-    //   Show loading while auth check is running
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
-        <p className="text-lg">Checking authentication...</p>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col">
