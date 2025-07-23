@@ -125,8 +125,8 @@ const loginUser = async (req, res, next) => {
 const logoutUser = async (req, res) => {
     res.clearCookie("accessToken", {
         httpOnly: true,
-        secure: false,
-        sameSite: "lax",
+        secure: true,
+        sameSite: "none",
     });
 
     // 

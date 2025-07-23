@@ -7,7 +7,7 @@ export default function Dashboard() {
     const [username, setUsername] = useState("");
     const [role, setRole] = useState("");
     const navigate = useNavigate();
-    const backendURL = import.meta.env.VITE_BACKEND_URL_LOCAL;
+    const backendURL = import.meta.env.VITE_BACKEND_URL;
 
     // Auth check function
     useEffect(() => {
