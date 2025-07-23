@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export default function Analytics() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
+  const backendURL = import.meta.env.VITE_BACKEND_URL_LOCAL;
 
   useEffect(() => {
     axios

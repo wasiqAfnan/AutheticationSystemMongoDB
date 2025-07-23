@@ -21,7 +21,7 @@ export default function LoginForm() {
   const handleLogin = (e) => {
     e.preventDefault();
     setLoading(true);
-    const backendURL = import.meta.env.VITE_BACKEND_URL;
+    const backendURL = import.meta.env.VITE_BACKEND_URL_LOCAL;
 
     axios
       .post(

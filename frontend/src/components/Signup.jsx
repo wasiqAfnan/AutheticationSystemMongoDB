@@ -12,7 +12,7 @@ export default function SignupForm() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
+  const backendURL = import.meta.env.VITE_BACKEND_URL_LOCAL;
 
   // Redirect if already logged in
     useEffect(() => {
