@@ -101,8 +101,8 @@ const loginUser = async (req, res, next) => {
         // send cookie
         res.cookie("accessToken", token, {
             httpOnly: true,
-            secure: true,
-            sameSite: "none",
+            secure: false,
+            sameSite: "lax",
             maxAge: 24 * 60 * 60 * 1000, // 1 day
         });
 
@@ -140,6 +140,35 @@ const userProfile = async (req, res) => {
         .status(200)
         .json(new ApiResponse("Profile Access Successful", 200, req.user));
 };
+
+/*
+const logout = asyncHandler(async (req, res, next) => {
+    try {
+        const user = await User.findById(req.user._id);
+        user.refreshToken = undefined;
+        await user.save();
+
+        res.clearCookie("accessToken", ).clearCookie("refreshToken", {
+            httpOnly: true,
+            secure: true,
+            sameSite: "None",
+            path: "/",
+        });
+
+        return res
+            .status(200)
+            .json(new ApiResponse("User logged out successfully"));
+    } catch (error) {
+        return next(
+            new ApiError(
+                `user.controller :: logout: ${error}`,
+                error.statusCode || 500
+            )
+        );
+    }
+});
+
+*/
 
 const userAnalytics = async (req, res, next) => {
     try {
