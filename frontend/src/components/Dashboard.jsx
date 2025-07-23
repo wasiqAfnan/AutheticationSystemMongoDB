@@ -4,52 +4,62 @@ import toast from "react-hot-toast";
 import axios from "axios";
 
 export default function Dashboard() {
-  const [username, setUsername] = useState("");
-  const [role, setRole] = useState("");
-  const navigate = useNavigate();
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
+  {
+    const [username, setUsername] = useState("");
+    const [role, setRole] = useState("");
+    const [loading, setLoading] = useState(true); // ✅ auth check in progress
+    const navigate = useNavigate();
+    const backendURL = import.meta.env.VITE_BACKEND_URL;
 
-  // Auth check function (outside useEffect)
+    // Auth check function
+    useEffect(() => {
+      const checkAuth = () => {
+        axios
+          .post(
+            `${backendURL}/api/user/profile`,
+            {},
+            {
+              withCredentials: true,
+            }
+          )
+          .then((res) => {
+            setUsername(res.data.data.name); // Based on your backend response
+            setRole(res.data.data.role);
+            console.log("Role: ", role);
+            setLoading(false); // ✅ done checking
+          })
+          .catch((err) => {
+            console.log(err);
+            toast.error(err.response?.data?.message || "Login failed ❌");
+            navigate("/");
+          });
+      };
+      checkAuth();
+    }, [navigate]);
 
-  useEffect(() => {
-    const checkAuth = () => {
+    const handleLogout = () => {
       axios
-        .post(
-          `${backendURL}/api/user/profile`,
-          {},
-          {
-            withCredentials: true,
-          }
-        )
+        .post(`${backendURL}/api/user/logout`, {}, { withCredentials: true })
         .then((res) => {
-          setUsername(res.data.data.name); // Based on your backend response
-          setRole(res.data.data.role);
-          console.log("Role: ", role);
+          sessionStorage.removeItem("name"); // clear session
+          sessionStorage.removeItem("email");
+          toast.success("Logged out ✅");
+          navigate("/");
         })
         .catch((err) => {
-          console.log(err);
-          toast.error(err.response?.data?.message || "Login failed ❌");
-          navigate("/");
+          toast.error("Logout failed.");
         });
     };
-    checkAuth();
-  }, [navigate]);
+  }
 
-  const handleLogout = async () => {
-    sessionStorage.removeItem("name"); // clear session
-    sessionStorage.removeItem("email");
-    try {
-      await axios.post(
-        `${backendURL}/api/user/logout`,
-        {},
-        { withCredentials: true }
-      );
-      toast.success("Logged out ✅");
-      navigate("/");
-    } catch (err) {
-      toast.error("Logout failed.");
-    }
-  };
+    //   Show loading while auth check is running
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
+        <p className="text-lg">Checking authentication...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col">
