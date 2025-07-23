@@ -4,7 +4,6 @@ import toast from "react-hot-toast";
 import axios from "axios";
 
 export default function Dashboard() {
-  {
     const [username, setUsername] = useState("");
     const [role, setRole] = useState("");
     const [loading, setLoading] = useState(true); // ✅ auth check in progress
@@ -50,7 +49,6 @@ export default function Dashboard() {
           toast.error("Logout failed.");
         });
     };
-  }
 
     //   Show loading while auth check is running
   if (loading) {
