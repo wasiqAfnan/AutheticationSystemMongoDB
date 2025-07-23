@@ -123,9 +123,16 @@ const loginUser = async (req, res, next) => {
 };
 
 const logoutUser = async (req, res) => {
-    res.status(200)
-        .clearCookie("accessToken")
-        .json(new ApiResponse("Logout successful", 200));
+    res.clearCookie("accessToken", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+    });
+
+    // 
+    return res
+        .status(200)
+        .json(new ApiResponse("logged out successfully", 200));
 };
 
 const userProfile = async (req, res) => {
