@@ -1,6 +1,6 @@
 # 🔐 Full-Stack Authentication System
 
-Live Demo 👉 [authwasiq.onrender.com](https://authwasiq.onrender.com)
+Live Demo 👉 [Here](https://accessifywasiq.netlify.app/)
 
 A sleek, dark-themed full-stack authentication system built with **React + Vite + Tailwind CSS** for the frontend and **Node.js + Express + MongoDB** for the backend. Users can register, log in, and access a protected dashboard with persistent sessions.
 
