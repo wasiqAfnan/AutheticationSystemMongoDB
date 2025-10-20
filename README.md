@@ -1,4 +1,4 @@
-# 🔐 Full-Stack Authentication System
+# 🔐 Full-Stack Authentication System [![Netlify Status](https://api.netlify.com/api/v1/badges/42b6c48a-f623-4f4a-b2e1-f9e4be78e56a/deploy-status)](https://app.netlify.com/projects/accessifywasiq/deploys)
 
 Live Demo 👉 [Here](https://accessifywasiq.netlify.app/)
 
